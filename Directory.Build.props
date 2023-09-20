@@ -1,0 +1,45 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <LangVersion>7.2</LangVersion>
+    <Configurations>Debug;Release;</Configurations>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Platforms>x86;x64;AnyCPU</Platforms>
+    <IsDebug>false</IsDebug>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <CreateOpenTapPackage>false</CreateOpenTapPackage>
+    <OpenTapVersion>9.22.0-beta.41</OpenTapVersion>
+    <OpenTapAppTargetFramework>netstandard2.0</OpenTapAppTargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <IsDebug>true</IsDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
+  
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(IsDebug)'=='true'">
+    <OutputPath>$(MSBuildThisFileDirectory)bin\Debug\</OutputPath>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsDebug)'!='true'">
+    <OutputPath>$(MSBuildThisFileDirectory)bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  
+  <Target Name="RemoveSatelliteAssemblies" AfterTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+        <ReferenceCopyLocalPaths Remove="@(ReferenceSatellitePaths)" />
+    </ItemGroup>
+  </Target>
+</Project>

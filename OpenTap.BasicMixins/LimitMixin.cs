@@ -5,9 +5,11 @@ namespace OpenTap.BasicMixins
     class LimitMixin : ValidatingObject, ITestStepPostRunMixin
     {
         [Display("Upper Limit")]
+        [EnabledIf(nameof(UpperLimitActive))]
         public double UpperLimit { get; set; }
         
         [Display("Lower Limit")]
+        [EnabledIf(nameof(LowerLimitActive))]
         public double LowerLimit { get; set; }
         
         public bool LowerLimitActive { get; }
