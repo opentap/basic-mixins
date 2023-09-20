@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package Name="Basic Mixins" xmlns="http://opentap.io/schemas/package" Version="$(GitVersion)" OS="Windows,Linux,Macos">
+  <Description>
+    The Basic Mixins package adds support for basic mixins.
+    <Links>
+      <Link Description="Link to the mixins section in the OpenTAP documentation." 
+            Name="Documentation"
+            Url="https://doc.opentap.io/Developer%20Guide/Test%20Step/#Mixins"/>
+    </Links>
+  </Description>
+  <Owner>OpenTAP</Owner>
+  <SourceUrl>https://github.com/opentap/basic-mixins</SourceUrl>
+  <SourceLicense>Apache-2.0</SourceLicense>
+  <Files>
+    <File Path="Packages/Basic Mixins/OpenTap.BasicMixins.dll" SourcePath="OpenTap.BasicMixins.dll">
+        <SetAssemblyInfo Attributes="Version"/>
+    </File>
+  </Files>
+</Package>
