@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTap.BasicMixins", "OpenTap.BasicMixins\OpenTap.BasicMixins.csproj", "{9E3CA437-A0F6-45E3-BAF5-DE6A71203491}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTap.BasicMixins.UnitTests", "OpenTap.BasicMixins.UnitTests\OpenTap.BasicMixins.UnitTests.csproj", "{40C38050-6CE8-4783-B83B-7FFC2900C3E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{9E3CA437-A0F6-45E3-BAF5-DE6A71203491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E3CA437-A0F6-45E3-BAF5-DE6A71203491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E3CA437-A0F6-45E3-BAF5-DE6A71203491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40C38050-6CE8-4783-B83B-7FFC2900C3E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C38050-6CE8-4783-B83B-7FFC2900C3E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C38050-6CE8-4783-B83B-7FFC2900C3E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C38050-6CE8-4783-B83B-7FFC2900C3E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

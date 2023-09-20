@@ -47,5 +47,4 @@ namespace OpenTap.BasicMixins
             if (Count == 0) step.SkipStep = true;
         }
     }
-
 }
