@@ -14,11 +14,11 @@ namespace OpenTap.BasicMixins.UnitTests
             var builder = new ArtifactMixinBuilder();
             var step = new TestTestStep();
             var member = MixinTestUtils.LoadMixin(step, builder);
-            member.SetValue(step, "tap.exe");
+            member.SetValue(step, "OpenTap.dll");
             var plan = new TestPlan();
             plan.ChildTestSteps.Add(step);
             var run = plan.Execute();
-            Assert.IsTrue(run.Artifacts.Contains("tap.exe"));
+            Assert.IsTrue(run.Artifacts.Contains("OpenTap.dll"));
         }
     }
 
