@@ -1,10 +1,10 @@
 name: Build
 on:
   push:
-    branches: [ "dev", "release1x", "release" ]
+    branches: [ "main", "release1x", "release" ]
     tags: [ "v*"]
   pull_request:
-    branches: [ "dev", "release1x", "release" ]
+    branches: [ "main", "release1x", "release" ]
 env:
   OPENTAP_ANSI_COLORS: true
   OPENTAP_NO_UPDATE_CHECK: true
