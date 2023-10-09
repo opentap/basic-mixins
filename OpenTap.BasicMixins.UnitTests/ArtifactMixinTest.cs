@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using OpenTap.UnitTest;
 
 namespace OpenTap.BasicMixins.UnitTests
@@ -22,24 +21,4 @@ namespace OpenTap.BasicMixins.UnitTests
         }
     }
 
-    public class TestTestStep : TestStep
-    {
-
-        public override void Run()
-        {
-            
-        }
-    }
-
-    public class MixinTestUtils
-    {
-        public static MixinMemberData LoadMixin(object target, IMixinBuilder mixin)
-        {
-            MixinMemberData dynamicMember = mixin.ToDynamicMember(TypeData.GetTypeData(target));
-            DynamicMember.AddDynamicMember(target, dynamicMember);
-            if(dynamicMember.TypeDescriptor.CanCreateInstance)
-                dynamicMember.SetValue(target, dynamicMember.TypeDescriptor.CreateInstance());
-            return dynamicMember;
-        }
-    }
 }

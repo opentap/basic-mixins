@@ -5,8 +5,13 @@ namespace OpenTap.BasicMixins
 {
     [Display("Limit", "This mixin adds a limit check to a test step.")]
     [MixinBuilder(typeof(ITestStep))]
-    public class LimitMixinBuilder : IMixinBuilder
+    public class LimitMixinBuilder : ValidatingObject, IMixinBuilder
     {
+
+        public LimitMixinBuilder()
+        {
+            Rules.Add(() => 0 != (int)Options, "Lower and/or upper limits must be selected.", nameof(Options));
+        }
         IEnumerable<Attribute> GetAttributes(string targetName)
         {
             yield return new EmbedPropertiesAttribute();
@@ -25,7 +30,7 @@ namespace OpenTap.BasicMixins
         public Option Options { get; set; } = Option.LowerLimit | Option.UpperLimit;
 
         [AvailableValues(nameof(Members))]
-        public string Value { get; set; }
+        public string Member { get; set; }
         
         [Display("Upper Limit", Order: 1)]
         [EnabledIf(nameof(UpperLimitVisible), true, HideIfDisabled = true)]
@@ -34,7 +39,6 @@ namespace OpenTap.BasicMixins
         [Display("Lower Limit", Order: 1.1)]
         [EnabledIf(nameof(LowerLimitVisible), true, HideIfDisabled = true)]
         public double LowerLimit { get; set; }
-
         
         public bool LowerLimitVisible => Options.HasFlag(Option.LowerLimit);
         public bool UpperLimitVisible => Options.HasFlag(Option.UpperLimit);
@@ -43,22 +47,24 @@ namespace OpenTap.BasicMixins
         public void Initialize(ITypeData targetType)
         {
             Members = targetType.GetMembers().Where(x => x.TypeDescriptor.IsNumeric()).Select(x => x.Name).ToArray();
-            if (string.IsNullOrWhiteSpace(Value))
-                Value = Members.FirstOrDefault() ?? "";
+            if (string.IsNullOrWhiteSpace(Member))
+                Member = Members.FirstOrDefault() ?? "";
         }
         
         
         public MixinMemberData ToDynamicMember(ITypeData targetType)
         {
+            if (string.IsNullOrWhiteSpace(Error) == false)
+                throw new Exception("Mixin not correctly configured: " + Error);
             
-            return new MixinMemberData(this, () => new LimitMixin(Options.HasFlag(Option.LowerLimit), Options.HasFlag(Option.UpperLimit), Value, LowerLimit, UpperLimit))
+            return new MixinMemberData(this, () => new LimitMixin(Options.HasFlag(Option.LowerLimit), Options.HasFlag(Option.UpperLimit), Member, LowerLimit, UpperLimit))
             {
                 TypeDescriptor = TypeData.FromType(typeof(LimitMixin)),
-                Attributes = GetAttributes(Value).ToArray(),
+                Attributes = GetAttributes(Member).ToArray(),
                 Writable = true,
                 Readable = true,
                 DeclaringType = targetType,
-                Name = "LimitMixin"
+                Name = "LimitMixin:" + Member
             };
         }
         public IMixinBuilder Clone()

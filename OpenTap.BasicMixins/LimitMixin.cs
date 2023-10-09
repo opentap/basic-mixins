@@ -5,20 +5,19 @@ namespace OpenTap.BasicMixins
     class LimitMixin : ValidatingObject, ITestStepPostRunMixin
     {
         [Display("Upper Limit")]
-        [EnabledIf(nameof(UpperLimitActive))]
+        [EnabledIf(nameof(UpperLimitActive), HideIfDisabled = true)]
         public double UpperLimit { get; set; }
         
         [Display("Lower Limit")]
-        [EnabledIf(nameof(LowerLimitActive))]
+        [EnabledIf(nameof(LowerLimitActive), HideIfDisabled = true)]
         public double LowerLimit { get; set; }
         
         public bool LowerLimitActive { get; }
         
         public bool UpperLimitActive { get; }
         
-        
         readonly string targetMemberName;
-
+        static readonly TraceSource log = Log.CreateSource("Limits");
         public void OnPostRun(TestStepPostRunEventArgs eventArgs)
         {
             var targetMember = TypeData.GetTypeData(eventArgs.TestStep).GetMember(targetMemberName);
@@ -29,12 +28,14 @@ namespace OpenTap.BasicMixins
             }
             var conv = targetMember.GetValue(eventArgs.TestStep) as IConvertible;
             var value = conv.ToDouble(null);
-            if (value > UpperLimit)
+            if (value > UpperLimit && UpperLimitActive)
             {
                 eventArgs.TestStep.UpgradeVerdict(Verdict.Fail);
-            }else if (value < LowerLimit)
+                log.Debug($"Upper {targetMember.GetDisplayAttribute().Group} failed for ${eventArgs.TestStep.GetFormattedName()}.");
+            }else if (value < LowerLimit && LowerLimitActive)
             {
                 eventArgs.TestStep.UpgradeVerdict(Verdict.Fail);
+                log.Debug($"Lower {targetMember.GetDisplayAttribute().Group} failed for ${eventArgs.TestStep.GetFormattedName()}.");
             }
             else
             {

@@ -20,6 +20,7 @@ namespace OpenTap.BasicMixins
         public RepeatBehavior Behavior { get; set; }
         
         [Display("Verdict Is")]
+        [EnabledIf(nameof(Behavior), RepeatBehavior.While, RepeatBehavior.Until, HideIfDisabled = true)]
         public Verdict VerdictIs { get; set; }
         
 
@@ -35,7 +36,13 @@ namespace OpenTap.BasicMixins
                 it = 1;
             if (it >= Count)
                 it = null;
-            else
+            else if (VerdictIs == step.TestStep.Verdict && Behavior == RepeatBehavior.Until)
+            {
+                it = null;
+            }else if (VerdictIs != step.TestStep.Verdict && Behavior == RepeatBehavior.While)
+            {
+                it = null;
+            }else
             {
                 step.TestStep.StepRun.SuggestedNextStep = step.TestStep.Id;
                 it += 1;
