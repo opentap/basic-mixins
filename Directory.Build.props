@@ -7,10 +7,10 @@
     <Configurations>Debug;Release;</Configurations>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <Platforms>x86;x64;AnyCPU</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <IsDebug>false</IsDebug>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <CreateOpenTapPackage>false</CreateOpenTapPackage>
     <OpenTapVersion>9.22.0-rc.3</OpenTapVersion>
     <OpenTapAppTargetFramework>netstandard2.0</OpenTapAppTargetFramework>
