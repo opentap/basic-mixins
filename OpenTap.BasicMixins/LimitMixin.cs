@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+
 namespace OpenTap.BasicMixins
 {
     [Display("Limit Mixin")]
@@ -18,6 +20,7 @@ namespace OpenTap.BasicMixins
         
         readonly string targetMemberName;
         static readonly TraceSource log = Log.CreateSource("Limits");
+        
         public void OnPostRun(TestStepPostRunEventArgs eventArgs)
         {
             var targetMember = TypeData.GetTypeData(eventArgs.TestStep).GetMember(targetMemberName);
@@ -28,17 +31,25 @@ namespace OpenTap.BasicMixins
             }
             var conv = targetMember.GetValue(eventArgs.TestStep) as IConvertible;
             var value = conv.ToDouble(null);
-            if (value > UpperLimit && UpperLimitActive)
+            
+            string BuildMessage()
             {
-                eventArgs.TestStep.UpgradeVerdict(Verdict.Fail);
-                log.Debug($"Upper {targetMember.GetDisplayAttribute().Group} failed for ${eventArgs.TestStep.GetFormattedName()}.");
-            }else if (value < LowerLimit && LowerLimitActive)
-            {
-                eventArgs.TestStep.UpgradeVerdict(Verdict.Fail);
-                log.Debug($"Lower {targetMember.GetDisplayAttribute().Group} failed for ${eventArgs.TestStep.GetFormattedName()}.");
+                var memberName = targetMember.GetDisplayAttribute().GetFullName();
+                var sb = new StringBuilder();
+                sb.Append($"Limit check for '{memberName}' in step '{eventArgs.TestStep.GetFormattedName()}' failed: Expected ");
+                if (LowerLimitActive)
+                    sb.Append($"{LowerLimit} < ");
+                sb.Append($"'{memberName}'");
+                if (UpperLimitActive)
+                    sb.Append($" < {UpperLimit}");
+                sb.Append($". (Was {value})");
+                return sb.ToString();
             }
-            else
-            {
+            
+            if (value > UpperLimit && UpperLimitActive || value < LowerLimit && LowerLimitActive) {
+                eventArgs.TestStep.UpgradeVerdict(Verdict.Fail);
+                log.Info(BuildMessage());
+            } else {
                 eventArgs.TestStep.UpgradeVerdict(Verdict.Pass);
             }
         }
