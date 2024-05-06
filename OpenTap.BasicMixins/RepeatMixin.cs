@@ -23,6 +23,8 @@ namespace OpenTap.BasicMixins
         [EnabledIf(nameof(Behavior), RepeatBehavior.While, RepeatBehavior.Until, HideIfDisabled = true)]
         public Verdict VerdictIs { get; set; }
         
+        [Display("Clear Verdict", "Clearing the verdict before repeating will cause the verdict not to propagate to parent steps.")]
+        public bool ClearVerdict { get; set; }
 
         public RepeatMixin()
         {
@@ -44,6 +46,8 @@ namespace OpenTap.BasicMixins
                 it = null;
             }else
             {
+                if(ClearVerdict)
+                    step.TestStep.Verdict = Verdict.NotSet;
                 step.TestStep.StepRun.SuggestedNextStep = step.TestStep.Id;
                 it += 1;
             }
