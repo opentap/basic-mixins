@@ -29,9 +29,5 @@ namespace OpenTap.BasicMixins
                 Name = "RepeatMixin"
             };
         }
-        public IMixinBuilder Clone()
-        {
-            return (IMixinBuilder)this.MemberwiseClone();
-        }
     }
 }
