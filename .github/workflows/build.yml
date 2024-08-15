@@ -10,7 +10,10 @@ env:
   OPENTAP_NO_UPDATE_CHECK: true
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on:
+       group: OpenTAP-SpokeVPC
+       labels:  [Linux, X64]
+    container: mcr.microsoft.com/dotnet/sdk:8.0
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -47,7 +50,7 @@ jobs:
       working-directory: bin/Release
       run: ./tap package create ../../OpenTap.BasicMixins/package.xml
       env: 
-        TAP_SIGN_ADDRESS: ${{ secrets.TAP_SIGN_ADDRESS }}
+        TAP_SIGN_ADDRESS: ${{ secrets.TAP_SIGN_ADDRESS_INTERNAL }}
         TAP_SIGN_AUTH:  ${{ secrets.TAP_SIGN_AUTH }}
         TAP_SIGN_CERT: ${{ github.workspace }}/sign.cer
         DOTFUSCATOR_LICENSE: ${{ secrets.DOTFUSCATOR_LICENSE }}
@@ -65,7 +68,10 @@ jobs:
 
   publish:
     environment: packages.opentap.io
-    runs-on: ubuntu-20.04
+    runs-on:
+       group: OpenTAP-SpokeVPC
+       labels:  [Linux, X64]
+    container: mcr.microsoft.com/dotnet/sdk:8.0
     needs: build
     steps:
     - name: Download binaries
