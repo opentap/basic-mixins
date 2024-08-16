@@ -19,7 +19,6 @@ jobs:
       TAP_SIGN_ADDRESS: ${{ secrets.TAP_SIGN_ADDRESS_INTERNAL }}
       TAP_SIGN_AUTH:  ${{ secrets.TAP_SIGN_AUTH }}
       TAP_SIGN_CERT: ${{ github.workspace }}/sign.cer
-      DOTFUSCATOR_LICENSE: ${{ secrets.DOTFUSCATOR_LICENSE }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
