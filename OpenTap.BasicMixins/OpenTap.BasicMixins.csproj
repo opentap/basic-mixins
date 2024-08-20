@@ -11,4 +11,8 @@
         <OpenTapPackageReference Include="OpenTAP"/>
     </ItemGroup>
 
+    <ItemGroup Condition="'$(Configuration)' == 'Release'">
+        <OpenTapPackageReference Include="Sign" Version="1.4.0" Reference="False" Repository="https://test-automation.pw.keysight.com/api/packages" Token="$(KS8500_REPO_TOKEN)" />
+    </ItemGroup>
+
 </Project>
