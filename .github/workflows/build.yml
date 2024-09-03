@@ -68,7 +68,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: TapPackage
-        path: bin/Release/
+        path: package
 
     - name: Setup OpenTAP
       uses: opentap/setup-opentap@main
@@ -77,7 +77,7 @@ jobs:
         packages: 'Repository Client:beta'
 
     - name: Publish Packages
-      working-directory: bin/Release
+      working-directory: package
       run: |
         tap repo upload --repository http://packages.opentap.io --token ${{ secrets.REPO_TOKEN }} "Basic Mixins".*.TapPackage
       
