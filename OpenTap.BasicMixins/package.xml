@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package Name="Basic Mixins" xmlns="http://opentap.io/schemas/package" Version="$(GitVersion)" OS="Windows,Linux,Macos">
   <Description>
-    The Basic Mixins package adds support for basic mixins.
+    Mixins are small units of functionality that can be integrated or 'mixed in' with an object. In the context of OpenTAP, they are be used for extending the capabilities of e.g. a test step.
     <Links>
       <Link Description="Link to the mixins section in the OpenTAP documentation." 
             Name="Documentation"
