@@ -14,16 +14,34 @@ defaults:
     shell: bash
 
 jobs:
+  GetVersion:
+    runs-on:
+       group: OpenTAP-SpokeVPC
+       labels:  [Linux, X64]
+    container: ghcr.io/opentap/oci-images/build-dotnet:latest
+    outputs:
+      ShortVersion: ${{ steps.gitversion.outputs.ShortVersion }}
+      LongVersion: ${{ steps.gitversion.outputs.LongVersion }}
+      GitVersion: ${{ steps.gitversion.outputs.GitVersion }}
+    steps:
+      # The get-gitversion action installs OpenTAP and fetches with fetch-depth: 0
+      - name: GitVersion
+        id: gitversion
+        uses: opentap/get-gitversion@main
+
   build:
     runs-on:
        group: OpenTAP-SpokeVPC
        labels:  [Linux, X64]
     container: ghcr.io/opentap/oci-images/build-dotnet:latest
+    needs: GetVersion
     env:
       KS8500_REPO_TOKEN: ${{ secrets.KS8500_REPO_TOKEN }}
       TAP_SIGN_ADDRESS: ${{ secrets.TAP_SIGN_ADDRESS_INTERNAL }}
       TAP_SIGN_AUTH:  ${{ secrets.TAP_SIGN_AUTH }}
       TAP_SIGN_CERT: ${{ github.workspace }}/sign.cer
+      ShortVersion: ${{ needs.GetVersion.outputs.ShortVersion }}
+      GitVersion: ${{ needs.GetVersion.outputs.GitVersion }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
