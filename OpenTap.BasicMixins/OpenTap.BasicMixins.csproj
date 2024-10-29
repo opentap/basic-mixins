@@ -5,6 +5,14 @@
         <AssemblyName>OpenTap.BasicMixins</AssemblyName>
         <RootNamespace>OpenTap.BasicMixins</RootNamespace>
     </PropertyGroup>
+
+    <PropertyGroup Condition="'$(GitVersion)' != ''">
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <Version>$(ShortVersion)</Version>
+        <AssemblyVersion>$(ShortVersion)</AssemblyVersion>
+        <InformationalVersion>$(GitVersion)</InformationalVersion>
+        <FileVersion>$(ShortVersion).0</FileVersion> 
+    </PropertyGroup>
     
     <ItemGroup>
         <PackageReference Include="OpenTAP" Version="$(OpenTapVersion)"/>
