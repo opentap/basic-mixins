@@ -10,7 +10,7 @@
   </Description>
   <Owner>OpenTAP</Owner>
   <SourceUrl>https://github.com/opentap/basic-mixins</SourceUrl>
-  <SourceLicense>Apache-2.0</SourceLicense>
+  <SourceLicense>MIT</SourceLicense>
   <Files>
     <File Path="Packages/Basic Mixins/OpenTap.BasicMixins.dll" SourcePath="OpenTap.BasicMixins.dll">
         <SetAssemblyInfo Attributes="Version"/>
